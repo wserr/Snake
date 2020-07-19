@@ -20,18 +20,20 @@ class Game():
     UpdateScore(self.Score)
     UpdateBattery()
     self.InputTimer = machine.Timer(2)
-    self.ScreenUpdateTimer = machine.Timer(0)
+    #self.ScreenUpdateTimer = machine.Timer(0)
     self.BatteryUpdateTimer = machine.Timer(1)
 
-    self.InputTimer.init(period=10, mode=machine.Timer.PERIODIC, callback=self.UpdateInput)
-    self.ScreenUpdateTimer.init(period=100, mode=machine.Timer.PERIODIC, callback=self.UpdateScreen)
-    self.BatteryUpdateTimer.init(period=5000, mode=machine.Timer.PERIODIC, callback=self.UpdateBattery)
+    self.InputTimer.init(period=1, mode=machine.Timer.PERIODIC, callback=self.UpdateInput)
+    #self.ScreenUpdateTimer.init(period=100, mode=machine.Timer.PERIODIC, callback=self.UpdateScreen)
+    #self.BatteryUpdateTimer.init(period=5000, mode=machine.Timer.PERIODIC, callback=self.UpdateBattery)
+    self.InternalCounter = 0
 
     self.TimersActive = True
 
     self.Playing = True
     while self.Playing:
       time.sleep(0.01)
+    return self.Score
 
   def UpdateBattery(self,timer):
     UpdateBattery()
@@ -39,10 +41,12 @@ class Game():
   def StopTimers(self):
       self.TimersActive = False
       self.InputTimer.deinit()
-      self.ScreenUpdateTimer.deinit()
+      #self.ScreenUpdateTimer.deinit()
 
   def UpdateInput(self,timer):
     GO.update()
+    self.InternalCounter = self.InternalCounter+1
+    print(self.InternalCounter)
     if GO.btn_menu.is_pressed() == 1:
       self.StopTimers()
     else:
@@ -58,9 +62,12 @@ class Game():
       elif GO.btn_joy_x.is_axis_pressed() == 1:
         #Right
         self.Snake.SetDirection(4)
+    if self.InternalCounter == 100:
+      self.InternalCounter = 0
+      self.UpdateScreen()
       
 
-  def UpdateScreen(self,timer):
+  def UpdateScreen(self):
       self.Snake.Move()
       Globals.DrawSnake(self.Snake)
       if self.playField.DetectCollisionWithWalls(self.Snake.Head) or self.playField.DetectCollisionWithItSelf(self.Snake):

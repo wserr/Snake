@@ -13,6 +13,6 @@ class WelcomeScreen():
         while(not ack):
             GO.update()
             ack = GO.btn_a.is_pressed() == 1
-            time.sleep(0.5)
+            time.sleep(0.1)
         game = Main.Game()
         
