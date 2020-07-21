@@ -1,12 +1,8 @@
-import Main
-import WelcomeScreen
+from snake.Main import Game
 
 
-
-
-
-WelcomeScreen.WelcomeScreen()
-Main.Game()
+def Snake():
+    Game.Play()
 
 
 

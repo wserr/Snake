@@ -1,6 +1,6 @@
 from odroid_go import GO
-from Entities.Block import Block
-from Entities.Snake import Snake
+from .Block import Block
+from .Snake import Snake
 
 SNAKE_COLOR = GO.lcd.colors.GREEN
 BACKGROUND_COLOR = GO.lcd.colors.BLACK

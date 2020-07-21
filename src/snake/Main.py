@@ -1,29 +1,33 @@
 from odroid_go import GO
 import machine
 import time
-from Entities import PlayField
-from Entities import Snake
-from Entities import Globals
-from InputTexts import *
-import WelcomeScreen
+from .Entities import PlayField
+from .Entities import Snake
+from .Entities import Globals
+from .InputTexts import *
 
-class Game():
+
+class Main():
   def __init__(self):
+    print("A new Snake game was initialized.")
+
+  def Play(self):
     GO.lcd.erase()
     GO.lcd.set_font(GO.lcd.fonts.TT14)
     self.playField = PlayField.PlayField()
     self.Snake = Snake.Snake(Globals.SNAKEINIT_X,Globals.SNAKEINIT_Y,Globals.INITIALDIRECTION)
+    self.playField.GetNewFoodBlock(self.Snake)
     Globals.FillRectangles(self.Snake.Body,Globals.SNAKE_COLOR)
     self.TimersActive = False
     
     self.Score = 0
     UpdateScore(self.Score)
     UpdateBattery()
-    self.InputTimer = machine.Timer(2)
+    #self.InputTimer = machine.Timer(0)
     #self.ScreenUpdateTimer = machine.Timer(0)
     self.BatteryUpdateTimer = machine.Timer(1)
 
-    self.InputTimer.init(period=1, mode=machine.Timer.PERIODIC, callback=self.UpdateInput)
+    #self.InputTimer.init(freq=1, callback=self.UpdateInput)
     #self.ScreenUpdateTimer.init(period=100, mode=machine.Timer.PERIODIC, callback=self.UpdateScreen)
     #self.BatteryUpdateTimer.init(period=5000, mode=machine.Timer.PERIODIC, callback=self.UpdateBattery)
     self.InternalCounter = 0
@@ -32,7 +36,9 @@ class Game():
 
     self.Playing = True
     while self.Playing:
-      time.sleep(0.01)
+      self.UpdateInput()
+      time.sleep(0.0001)
+    GO.lcd.erase()
     return self.Score
 
   def UpdateBattery(self,timer):
@@ -40,13 +46,12 @@ class Game():
 
   def StopTimers(self):
       self.TimersActive = False
-      self.InputTimer.deinit()
+      #self.InputTimer.deinit()
       #self.ScreenUpdateTimer.deinit()
 
-  def UpdateInput(self,timer):
+  def UpdateInput(self):
     GO.update()
     self.InternalCounter = self.InternalCounter+1
-    print(self.InternalCounter)
     if GO.btn_menu.is_pressed() == 1:
       self.StopTimers()
     else:
@@ -62,7 +67,7 @@ class Game():
       elif GO.btn_joy_x.is_axis_pressed() == 1:
         #Right
         self.Snake.SetDirection(4)
-    if self.InternalCounter == 100:
+    if self.InternalCounter == 4:
       self.InternalCounter = 0
       self.UpdateScreen()
       
@@ -74,10 +79,12 @@ class Game():
         self.Playing = False
       if self.playField.DetectCollisionWithFood(self.Snake.Head):
         self.Snake.AddBlock()
-        self.playField.GetNewFoodBlock()
+        self.playField.GetNewFoodBlock(self.Snake)
         self.Score = self.Score + 1
         UpdateScore(self.Score)
 
+
+Game = Main()
 
 
         

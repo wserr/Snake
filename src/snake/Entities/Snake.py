@@ -1,6 +1,6 @@
 from odroid_go import GO
-from Entities.Block import Block,CopyTo,CopyToExistingBlock
-from Entities import Globals
+from .Block import Block,CopyTo,CopyToExistingBlock
+from . import Globals
 
 class Snake():
     def __init__(self,initX,initY,initDirection):
