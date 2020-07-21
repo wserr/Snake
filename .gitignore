@@ -7,3 +7,6 @@
 # prevent from adding some test codes
 odroid_go/test
 odroid_go/test/*
+
+# python build files
+*.pyc

@@ -66,7 +66,6 @@ class Game():
       self.InternalCounter = 0
       self.UpdateScreen()
       
-
   def UpdateScreen(self):
       self.Snake.Move()
       Globals.DrawSnake(self.Snake)
