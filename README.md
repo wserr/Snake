@@ -27,7 +27,7 @@ rsync -m . /pyboard
 
 ## Playing the game
 
-With this simple example, you can play the game by pressing the `menu` button while turning the odroid on.
+You can play the game by pressing the `menu` button while turning the odroid on.
 
 
 ## Issues & feature requests
