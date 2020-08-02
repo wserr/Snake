@@ -2,6 +2,8 @@
 
 Welcome to my version of Snake, written specifically for the ODROID GO gameboy!
 
+![snake preview](snake.jpg)
+
 ## How to play
 
 ### Install MicroPython on your ODROID GO
@@ -16,12 +18,16 @@ After installing the firmware, sync the folder of this repository to your ODROID
 rshell --buffer-size 32 -a -p /dev/ttyUSB0
 ```
 
-2. Navigate to the folder containing the `Main.py` file.
+2. Navigate to the folder containing the `boot.py` file. In this case, this is the `src` folder.
 3. Sync this folder to the ODROID GO
 
 ```bash
 rsync -m . /pyboard
 ```
+
+## Playing the game
+
+With this simple example, you can play the game by pressing the `menu` button while turning the odroid on.
 
 
 ## Issues & feature requests
