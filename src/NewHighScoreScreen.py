@@ -32,11 +32,11 @@ class NewHighScoreScreen:
 
             elif(GO.btn_joy_y.is_axis_pressed() == 2):
                 #up
-                self.Text = self.ReplaceCharacterInString(self.Text,self.SelectedOption-1,self.GetNextLetter(self.Text[self.SelectedOption-1]))
+                self.Text = self.ReplaceCharacterInString(self.Text,self.SelectedOption-1,self.GetPreviousLetter(self.Text[self.SelectedOption-1]))
                 self.UpdateText()
             elif(GO.btn_joy_y.is_axis_pressed() == 1):
                 #down
-                self.Text = self.ReplaceCharacterInString(self.Text,self.SelectedOption-1,self.GetPreviousLetter(self.Text[self.SelectedOption-1]))
+                self.Text = self.ReplaceCharacterInString(self.Text,self.SelectedOption-1,self.GetNextLetter(self.Text[self.SelectedOption-1]))
                 self.UpdateText()
 
             time.sleep(0.1)
