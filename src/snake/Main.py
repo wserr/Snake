@@ -8,27 +8,26 @@ from .InputTexts import *
 
 
 class Main():
-  def __init__(self):
-    print("A new Snake game was initialized.")
-
-  def Play(self):
+  def Play(self, maxScore):
     GO.lcd.erase()
+    GO.lcd.fill(color=GO.lcd.colors.BLACK)
     GO.lcd.set_font(GO.lcd.fonts.TT14)
+    GO.lcd.set_color(fg=GO.lcd.colors.WHITE, bg=GO.lcd.colors.BLACK)
     self.playField = PlayField.PlayField()
     self.Snake = Snake.Snake(Globals.SNAKEINIT_X,Globals.SNAKEINIT_Y,Globals.INITIALDIRECTION)
     self.playField.GetNewFoodBlock(self.Snake)
+    self.MaxScore = maxScore
+
     Globals.FillRectangles(self.Snake.Body,Globals.SNAKE_COLOR)
     self.TimersActive = False
     
     self.Score = 0
+    GO.speaker.set_volume(10)
     UpdateScore(self.Score)
-    UpdateBattery()
-    #self.InputTimer = machine.Timer(0)
-    #self.ScreenUpdateTimer = machine.Timer(0)
-    self.BatteryUpdateTimer = machine.Timer(1)
+    #UpdateBattery()
 
-    #self.InputTimer.init(freq=1, callback=self.UpdateInput)
-    #self.ScreenUpdateTimer.init(period=100, mode=machine.Timer.PERIODIC, callback=self.UpdateScreen)
+    #self.BatteryUpdateTimer = machine.Timer(1)
+
     #self.BatteryUpdateTimer.init(period=5000, mode=machine.Timer.PERIODIC, callback=self.UpdateBattery)
     self.InternalCounter = 0
 
@@ -46,8 +45,7 @@ class Main():
 
   def StopTimers(self):
       self.TimersActive = False
-      #self.InputTimer.deinit()
-      #self.ScreenUpdateTimer.deinit()
+      #self.BatteryUpdateTimer.deinit()
 
   def UpdateInput(self):
     GO.update()
@@ -77,12 +75,16 @@ class Main():
       if self.playField.DetectCollisionWithWalls(self.Snake.Head) or self.playField.DetectCollisionWithItSelf(self.Snake):
         self.StopTimers()
         self.Playing = False
+        Globals.LostTone()
       if self.playField.DetectCollisionWithFood(self.Snake.Head):
         self.Snake.AddBlock()
         self.playField.GetNewFoodBlock(self.Snake)
         self.Score = self.Score + 1
         UpdateScore(self.Score)
-
+        Globals.FoodTone()
+      if(self.Score==self.MaxScore):
+        self.Playing = False
+        Globals.WinTone()
 
 Game = Main()
 
