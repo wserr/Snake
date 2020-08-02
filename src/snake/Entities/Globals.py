@@ -53,3 +53,6 @@ CAR_BODY = GO.lcd.colors.WHITE
 CAR_TIRES = GO.lcd.colors.GREEN
 CAR_FRONT_LIGHTS =GO.lcd.colors.GREEN
 INDICATION = GO.lcd.colors.RED
+
+ALPHABET = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+ALPHABET_COUNT = len(ALPHABET)
