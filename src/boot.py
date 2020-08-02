@@ -1,12 +1,5 @@
-import Main
-import WelcomeScreen
+from snake.Main import Game
+from odroid_go import GO
 
-
-
-
-
-WelcomeScreen.WelcomeScreen()
-Main.Game()
-
-
-
+if (GO.btn_menu.is_pressed()==1):
+    score = Game.Play(10)

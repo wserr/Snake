@@ -1,6 +1,6 @@
 from odroid_go import GO
-from Entities.Block import Block
-from Entities.Snake import Snake
+from .Block import Block
+from .Snake import Snake
 
 SNAKE_COLOR = GO.lcd.colors.GREEN
 BACKGROUND_COLOR = GO.lcd.colors.BLACK
@@ -39,3 +39,17 @@ def DrawSnake(snake):
     FillRectangle(snake.Head,SNAKE_COLOR)
     if not snake.BlockBehindTail == None:
         FillRectangle(snake.BlockBehindTail,BACKGROUND_COLOR)
+
+def LostTone():
+    GO.speaker.tone(300,0.2)
+
+def FoodTone():
+    GO.speaker.tone(400,0.2)
+
+def WinTone():
+    GO.speaker.tone(500,0.2)
+
+CAR_BODY = GO.lcd.colors.WHITE
+CAR_TIRES = GO.lcd.colors.GREEN
+CAR_FRONT_LIGHTS =GO.lcd.colors.GREEN
+INDICATION = GO.lcd.colors.RED
